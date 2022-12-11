@@ -4,12 +4,12 @@
  */
 package View;
 
-import javax.sound.sampled.*;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
 import java.io.IOException;
 
 /**
@@ -22,11 +22,11 @@ public class MainMenuGUI {
     private JLabel myStatusLabel;
     private JPanel myControlPanel;
     private JPanel myHeaderPanel;
-    private boolean soundOn = true;
-    private String myBgMusicFile = "kim-lightyear-angel-eyes-chiptune-edit-110226-_1_.wav";
-    private AudioInputStream myBackgroundMusic = AudioSystem.getAudioInputStream(new File(myBgMusicFile));
-    private Clip clip = AudioSystem.getClip();
-    private long myMusicPauseTime = 0;
+//    private boolean soundOn = false;
+//    private String myBgMusicFile = "kim-lightyear-angel-eyes-chiptune-edit-110226-_1_.wav";
+//    private AudioInputStream myBackgroundMusic = AudioSystem.getAudioInputStream(new File(myBgMusicFile));
+//    private Clip clip = AudioSystem.getClip();
+//    private long myMusicPauseTime = 0;
     static GraphicsDevice device = GraphicsEnvironment
             .getLocalGraphicsEnvironment().getScreenDevices()[0];
 
@@ -51,9 +51,7 @@ public class MainMenuGUI {
     private void prepareGUI() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         myMainFrame = new JFrame("Trivia Maze");
 
-        playMusic();
-
-        ImageIcon gif = new ImageIcon("http://doc.gold.ac.uk/compartsblog/wp-content/uploads/2017/05/frames.gif");
+        //ImageIcon gif = new ImageIcon("http://doc.gold.ac.uk/compartsblog/wp-content/uploads/2017/05/frames.gif");
 
         //myGifFrame.setIconImage(gif.getImage());
 
@@ -92,17 +90,17 @@ public class MainMenuGUI {
         //myGifFrame.setVisible(true);
         myMainFrame.setVisible(true);
     }
-    private void playMusic() throws IOException, LineUnavailableException {
-        if(soundOn) {
-            clip.open(myBackgroundMusic);
-            clip.setMicrosecondPosition(myMusicPauseTime);
-            clip.start();
-            clip.loop(Clip.LOOP_CONTINUOUSLY);
-        }else{
-            myMusicPauseTime = clip.getMicrosecondLength();
-            clip.stop();
-        }
-    }
+//    private void playMusic() throws IOException, LineUnavailableException {
+//        if(soundOn) {
+//            clip.open(myBackgroundMusic);
+//            clip.setMicrosecondPosition(myMusicPauseTime);
+//            clip.start();
+//            clip.loop(Clip.LOOP_CONTINUOUSLY);
+//        }else{
+//            myMusicPauseTime = clip.getMicrosecondLength();
+//            clip.stop();
+//        }
+//    }
 
     /**
      * @return void
@@ -110,6 +108,8 @@ public class MainMenuGUI {
      * instantiates the correct classes based on user input
      */
     public void showActionListener(){
+        myHeaderLabel.setFont(new Font("Big Font", Font.BOLD, 30));
+        myHeaderLabel.setForeground(Color.RED);
         myHeaderLabel.setText("Welcome to Trivia Maze!");
 
         JPanel panel1 = new JPanel();
@@ -170,18 +170,22 @@ public class MainMenuGUI {
         });
         panel6.add(musicButton);
         aboutButton.addActionListener(e -> {
-            if (soundOn){
-                soundOn = false;
-                try {
-                    playMusic();
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                } catch (LineUnavailableException ex) {
-                    throw new RuntimeException(ex);
-                }
-
-            }else{
-                soundOn = true;
+            Sound myBGMusic = null;
+            try {
+                myBGMusic = new Sound();
+            } catch (UnsupportedAudioFileException ex) {
+                throw new RuntimeException(ex);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            } catch (LineUnavailableException ex) {
+                throw new RuntimeException(ex);
+            }
+            try {
+                myBGMusic.playMusic();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            } catch (LineUnavailableException ex) {
+                throw new RuntimeException(ex);
             }
 
         });

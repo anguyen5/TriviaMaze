@@ -6,7 +6,7 @@ import Model.Room;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.io.Serializable;
+import java.io.*;
 
 
 public class GameView extends JFrame implements Serializable {
@@ -27,8 +27,10 @@ public class GameView extends JFrame implements Serializable {
     private int myId;
     private int[][] myMaze = Model.Maze.getMAZE();
     private int myRectSize = Maze.myRectSize();
+    private String fileName = "StoredData.mze";
+    private static final long serialVersionUID = 1234567890L;
 
-    public GameView(int x) {
+    public GameView(int x) throws FileNotFoundException {
         if(x == 3){
             myMaze[5][1] = 4;
             myMaze[5][3] = 4;
@@ -55,6 +57,22 @@ public class GameView extends JFrame implements Serializable {
         myCurrentY = 1;
         myCate = "";
         myId = 0;
+
+        //Saving the state
+        try{
+            FileOutputStream file = new FileOutputStream(fileName);
+            ObjectOutputStream out = new ObjectOutputStream(file);
+
+            out.writeObject(myMaze);
+
+            out.close();
+            file.close();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
 
     }
 

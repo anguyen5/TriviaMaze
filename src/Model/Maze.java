@@ -1,12 +1,9 @@
 package Model;
 
-import java.io.Serializable;
-
 /**
  *
  */
-public class Maze implements Serializable {
-    private static final long serialVersionUID = 1234567890L;
+public class Maze {
 
     private static final int RECT_SIZE = 60;
     public static int myRectSize() {
