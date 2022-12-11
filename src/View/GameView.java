@@ -1,52 +1,22 @@
 package View;
 
+import Model.Maze;
 import Model.Room;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
 
 
-public class LvEasyView extends JFrame {
+public class GameView extends JFrame implements Serializable {
 
-    private final int RECT_SIZE = 60;
     private final int E_WALL = 1;
     private final int E_FAIL = 2;
     private final int E_PASS = 3;
     private final int E_DOOR = 4;
     private final int E_DEST = 5;
     private final int E_PATH = 8;
-
-
-    private final int[][] MAZE =
-            {       {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                    {1, 8, 1, 8, 4, 8, 8, 8, 8, 8, 4, 8, 1},
-                    {1, 8, 1, 8, 8, 8, 8, 4, 1, 1, 1, 8, 1},
-                    {1, 8, 4, 8, 1, 1, 8, 8, 8, 8, 4, 8, 1},
-                    {1, 8, 1, 8, 8, 8, 4, 8, 1, 1, 1, 8, 1},
-                    {1, 8, 1, 8, 1, 1, 1, 8, 4, 8, 8, 4, 1},
-                    {1, 8, 1, 8, 1, 8, 8, 8, 1, 8, 1, 8, 1},
-                    {1, 8, 1, 4, 1, 1, 1, 4, 1, 4, 8, 8, 1}, // 10x13
-                    {1, 4, 8, 8, 8, 4, 8, 8, 8, 8, 1, 5, 1}, // at position 11,8
-                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
-            };
-
-
-   /* {0, 0, 0, 0},
-    {0, 0, 0, 0},
-    {0, 0, 0, 0},
-    {0, 0, 0, 9}*/
-    /*{1,1,1,1,1,1,1,1,1,1,1,1,1},
-    {1,0,1,0,1,0,1,0,0,0,0,0,1},
-    {1,0,1,0,0,0,1,0,1,1,1,0,1},
-    {1,0,0,0,1,1,1,0,0,0,0,0,1},
-    {1,0,1,0,0,0,0,0,1,1,1,0,1},
-    {1,0,1,0,1,1,1,0,1,0,0,0,1},
-    {1,0,1,0,1,0,0,0,1,1,1,0,1},
-    {1,0,1,0,1,1,1,0,1,0,1,0,1}, //10x13
-    {1,0,0,0,0,0,0,0,0,0,1,9,1}, // at position 11,8
-    {1,1,1,1,1,1,1,1,1,1,1,1,1}*/
-
     private int myPreX, myPreY;
     private int myCurrentX, myCurrentY;
 
@@ -55,12 +25,25 @@ public class LvEasyView extends JFrame {
     private RoomTFView myViewTF;
     private String myCate;
     private int myId;
+    private int[][] myMaze = Model.Maze.getMAZE();
+    private int myRectSize = Maze.myRectSize();
 
-    public LvEasyView() {
-        /*setTitle("Simple Maze");
-        setSize(640, 480);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);*/
+    public GameView(int x) {
+        if(x == 3){
+            myMaze[5][1] = 4;
+            myMaze[5][3] = 4;
+            myMaze[3][8] = 4;
+            myMaze[7][11] = 4;
+            myMaze[8][8] = 4;
+            myMaze[2][4] = 1;
+        }if(x == 2){
+            //myMaze[5][1] = 4;
+            myMaze[5][3] = 4;
+            myMaze[3][8] = 4;
+            myMaze[7][11] = 4;
+            myMaze[8][8] = 4;
+            myMaze[2][4] = 1;
+        }
 
         prepareGUI();
         myViewMC = new RoomMCView();
@@ -72,11 +55,12 @@ public class LvEasyView extends JFrame {
         myCurrentY = 1;
         myCate = "";
         myId = 0;
+
     }
 
     private void prepareGUI() {
 
-        this.setTitle("Welcome to Easy");
+        this.setTitle("Welcome to Trivia Maze");
 //        this.setSize(640, 480);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setLocationRelativeTo(null);
@@ -94,10 +78,10 @@ public class LvEasyView extends JFrame {
         int check = 0;
 
 
-        for (int row = 0; row < MAZE.length; row++) {
-            for (int col = 0; col < MAZE[0].length; col++) {
+        for (int row = 0; row < myMaze.length; row++) {
+            for (int col = 0; col < myMaze[0].length; col++) {
                 Color color;
-                switch (MAZE[row][col]) {
+                switch (myMaze[row][col]) {
                     case E_WALL:
                         color = Color.GRAY;
                         break;
@@ -119,16 +103,14 @@ public class LvEasyView extends JFrame {
 
 
                 g.setColor(color);
-                g.fillRect(RECT_SIZE * col, RECT_SIZE * row, RECT_SIZE, RECT_SIZE);
+                g.fillRect(myRectSize * col, myRectSize * row, myRectSize, myRectSize);
                 g.setColor(Color.BLACK);
-                g.drawRect(RECT_SIZE * col, RECT_SIZE * row, RECT_SIZE, RECT_SIZE);
+                g.drawRect(myRectSize * col, myRectSize * row, myRectSize, myRectSize);
 
                 if (myCurrentX == col && myCurrentY == row) {
                     g.setColor(Color.PINK);
-                    g.fillOval(RECT_SIZE * col, RECT_SIZE * row, RECT_SIZE, RECT_SIZE);
+                    g.fillOval(myRectSize * col, myRectSize * row, myRectSize, myRectSize);
                 }
-
-
             }
         }
 
@@ -144,36 +126,36 @@ public class LvEasyView extends JFrame {
 
         if (myCate.equals("MC")) {
             if (myViewMC.checkAns == false) {
-                MAZE[myCurrentY][myCurrentX] = E_FAIL;
+                myMaze[myCurrentY][myCurrentX] = E_FAIL;
                 myCurrentX = myPreX;
                 myCurrentY = myPreY;
             }
             else {
-                MAZE[myCurrentY][myCurrentX] = E_PASS;
+                myMaze[myCurrentY][myCurrentX] = E_PASS;
             }
 
             reDraw = true;
             myCate = "";
         } else if (myCate.equals("TF")) {
             if (myViewTF.myCheckAns == false) {
-                MAZE[myCurrentY][myCurrentX] = E_FAIL;
+                myMaze[myCurrentY][myCurrentX] = E_FAIL;
                 myCurrentX = myPreX;
                 myCurrentY = myPreY;
             }
             else {
-                MAZE[myCurrentY][myCurrentX] = E_PASS;
+                myMaze[myCurrentY][myCurrentX] = E_PASS;
             }
 
             reDraw = true;
             myCate = "";
         } else if (myCate.equals("SA")) {
             if (myViewSA.myCheckAns == false) {
-                MAZE[myCurrentY][myCurrentX] = E_FAIL;
+                myMaze[myCurrentY][myCurrentX] = E_FAIL;
                 myCurrentX = myPreX;
                 myCurrentY = myPreY;
             }
             else {
-                MAZE[myCurrentY][myCurrentX] = E_PASS;
+                myMaze[myCurrentY][myCurrentX] = E_PASS;
             }
 
             reDraw = true;
@@ -182,7 +164,7 @@ public class LvEasyView extends JFrame {
 
         if (ke.getKeyCode() == KeyEvent.VK_UP) {
             if (myCurrentY > 0) {
-                if(MAZE[myCurrentY - 1][myCurrentX] > E_FAIL) {
+                if(myMaze[myCurrentY - 1][myCurrentX] > E_FAIL) {
                     myPreX = myCurrentX;
                     myPreY = myCurrentY;
                     myCurrentY -= 1;
@@ -190,8 +172,8 @@ public class LvEasyView extends JFrame {
                 }
             }
         } else if (ke.getKeyCode() == KeyEvent.VK_DOWN) {
-            if (myCurrentY < MAZE.length - 1) {
-                if(MAZE[myCurrentY + 1][myCurrentX] > E_FAIL) {
+            if (myCurrentY < myMaze.length - 1) {
+                if(myMaze[myCurrentY + 1][myCurrentX] > E_FAIL) {
                     myPreX = myCurrentX;
                     myPreY = myCurrentY;
                     myCurrentY += 1;
@@ -200,7 +182,7 @@ public class LvEasyView extends JFrame {
             }
         } else if (ke.getKeyCode() == KeyEvent.VK_LEFT) {
             if (myCurrentX > 0) {
-                if(MAZE[myCurrentY][myCurrentX - 1] > E_FAIL) {
+                if(myMaze[myCurrentY][myCurrentX - 1] > E_FAIL) {
                     myPreX = myCurrentX;
                     myPreY = myCurrentY;
                     myCurrentX -= 1;
@@ -208,8 +190,8 @@ public class LvEasyView extends JFrame {
                 }
             }
         } else if (ke.getKeyCode() == KeyEvent.VK_RIGHT) {
-            if (myCurrentX < MAZE[0].length - 1) {
-                if(MAZE[myCurrentY][myCurrentX + 1] > E_FAIL) {
+            if (myCurrentX < myMaze[0].length - 1) {
+                if(myMaze[myCurrentY][myCurrentX + 1] > E_FAIL) {
                     myPreX = myCurrentX;
                     myPreY = myCurrentY;
                     myCurrentX += 1;
@@ -220,7 +202,7 @@ public class LvEasyView extends JFrame {
 
         if (reDraw) {
             repaint();
-            if(MAZE[myCurrentY][myCurrentX] == E_DOOR) {
+            if(myMaze[myCurrentY][myCurrentX] == E_DOOR) {
                 displayQuestion();
             }
         }

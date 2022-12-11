@@ -1,12 +1,20 @@
 package Model;
 
-import java.io.*;
-import java.lang.reflect.Array;
-import java.sql.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Scanner;
 
-import java.util.*;
-
-public class QA extends Inventory implements Serializable{
+/**
+ * This class is the parent for all question types used in this program
+ * it fetches data from the database and creates instances of of those questions objects
+ */
+public class QA extends Inventory {
 
     private File myFileCSV_QMC;
     private File myFileCSV_QAS;

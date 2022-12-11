@@ -1,11 +1,10 @@
 package Model;
 
-import java.io.Serializable;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class QAMC extends QA implements Serializable {
+public class QAMC extends QA {
     Connection myConn;
     private String myQuesMC;
     private String myCorrAnsMC;

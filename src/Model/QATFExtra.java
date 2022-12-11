@@ -1,10 +1,9 @@
 package Model;
 
-import java.io.Serializable;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class QATFExtra extends QA implements Serializable {
+public class QATFExtra extends QA  {
     Connection myConn;
     private String myQuesTFE;
     private String myCorrAnsTFE;

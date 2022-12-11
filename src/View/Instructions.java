@@ -1,8 +1,7 @@
 package View;
 
-import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
+import java.awt.*;
 /**
  * @author satindersingh
  * @version 12/2/2022
@@ -14,6 +13,7 @@ import javax.swing.*;
  */
 public class Instructions {
     private JFrame myInstFrame;
+    private JPanel myTextSpace;
 
 //    /**
 //     * Default constructor that calls prepareGUI()
@@ -28,8 +28,8 @@ public class Instructions {
     void prepareGUI(){
         myInstFrame = new JFrame("Instructions on How To Play");
         myInstFrame.setSize(800,700);
-        //myInstFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        //myInstFrame.setUndecorated(true);
+        //myInstFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); //to open in full screen
+        //myInstFrame.setUndecorated(true); // to show exit, minimize, etc
         myInstFrame.setLayout(new BorderLayout());
         myInstFrame.setBackground(Color.getHSBColor(240,100,72));
         myInstFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -51,7 +51,10 @@ public class Instructions {
         Font instFont = new Font("Instruction Font", Font.ITALIC, 20);
 
         textArea.setFont(instFont);
-        myInstFrame.add(textArea);
+
+        myTextSpace = new JPanel(new FlowLayout());
+        myTextSpace.add(textArea);
+        myInstFrame.add(myTextSpace);
 
     }
 }

@@ -1,8 +1,16 @@
 package Model;
+
 import org.sqlite.SQLiteDataSource;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
 
+/**
+ * This class retrieves data from SQLite database to be used as questions
+ * and answers for the game.
+ */
 public abstract class Inventory {
     private String myUrl;
     private Connection myConnIven;

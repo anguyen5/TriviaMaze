@@ -66,7 +66,7 @@ public class PlayGameView {
                     @Override
                     public void run() {
 
-                        LvEasyView lvEasy = new LvEasyView();
+                        GameView lvEasy = new GameView(1);
 
                     }
                 });
@@ -82,7 +82,7 @@ public class PlayGameView {
                     @Override
                     public void run() {
 
-                        LvMediumView lvEasy = new LvMediumView();
+                        GameView lvMedium = new GameView(2);
 
                     }
                 });
@@ -97,7 +97,7 @@ public class PlayGameView {
                     @Override
                     public void run() {
 
-                        LvHardView lvEasy = new LvHardView();
+                        GameView lvHard = new GameView(3);
 
                     }
                 });
