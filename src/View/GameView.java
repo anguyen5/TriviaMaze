@@ -17,21 +17,24 @@ public class GameView extends JFrame implements Serializable {
     private final int E_DOOR = 4;
     private final int E_DEST = 5;
     private final int E_PATH = 8;
-    private int myPreX, myPreY;
-    private int myCurrentX, myCurrentY;
+    private int myPreX, myPreY = 1;
+    private int myCurrentX = 1, myCurrentY = 1;
 
+    private JPanel myPanelHolder;
+    private JButton mySaveButton;
     private RoomMCView myViewMC;
     private RoomSAView myViewSA;
     private RoomTFView myViewTF;
-    private String myCate;
-    private int myId;
-    private int[][] myMaze = Model.Maze.getMAZE();
+    private String myCate = "";
+    private int myId, myGameDifficulty;
+    int[][] myMaze = Model.Maze.getMAZE();
     private int myRectSize = Maze.myRectSize();
     private String fileName = "StoredData.mze";
     private static final long serialVersionUID = 1234567890L;
 
     public GameView(int x) throws FileNotFoundException {
         if(x == 3){
+            myGameDifficulty = x;
             myMaze[5][1] = 4;
             myMaze[5][3] = 4;
             myMaze[3][8] = 4;
@@ -39,10 +42,11 @@ public class GameView extends JFrame implements Serializable {
             myMaze[8][8] = 4;
             myMaze[2][4] = 1;
         }if(x == 2){
+            myGameDifficulty = x;
             //myMaze[5][1] = 4;
             myMaze[5][3] = 4;
             myMaze[3][8] = 4;
-            myMaze[7][11] = 4;
+            //myMaze[7][11] = 4;
             myMaze[8][8] = 4;
             myMaze[2][4] = 1;
         }
@@ -51,34 +55,66 @@ public class GameView extends JFrame implements Serializable {
         myViewMC = new RoomMCView();
         myViewSA = new RoomSAView();
         myViewTF = new RoomTFView();
-        myPreX = 1;
-        myPreY = 1;
-        myCurrentX = 1;
-        myCurrentY = 1;
-        myCate = "";
-        myId = 0;
+//        myPreX = 1;
+//        myPreY = 1;
+//        myCurrentX = 1;
+//        myCurrentY = 1;
+//        myCate = "";
+//        myId = 0;
 
         //Saving the state
-        try{
-            FileOutputStream file = new FileOutputStream(fileName);
-            ObjectOutputStream out = new ObjectOutputStream(file);
+//        try{
+//            FileOutputStream file = new FileOutputStream(fileName);
+//            ObjectOutputStream out = new ObjectOutputStream(file);
+//
+//            out.writeObject(myMaze);
+//            out.writeObject(myCurrentX);
+//            out.writeObject(myCurrentY);
+//
+//            out.close();
+//            file.close();
+//        } catch (FileNotFoundException e) {
+//            throw new RuntimeException(e);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+    }
 
-            out.writeObject(myMaze);
-
-            out.close();
-            file.close();
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-
+    public GameView(int mySavedDifficulty, int[][] mySavedMaze, int mySavedX, int mySavedY) throws FileNotFoundException {
+        this.myMaze = mySavedMaze;
+        this.myCurrentX = mySavedX;
+        this.myCurrentY = mySavedY;
+        new GameView(mySavedDifficulty);
     }
 
     private void prepareGUI() {
 
         this.setTitle("Welcome to Trivia Maze");
+        myPanelHolder = new JPanel();
+        myPanelHolder.setBackground(Color.cyan);
+        mySaveButton = new JButton("Save Game");
+        mySaveButton.setLocation(800,400);
+        myPanelHolder.add(mySaveButton);
+        this.add(myPanelHolder);
+//        JButton mySavedGame = new JButton("Saved Game");
+        mySaveButton.addActionListener(e -> {
+            try{
+                FileOutputStream file = new FileOutputStream(fileName);
+                ObjectOutputStream out = new ObjectOutputStream(file);
+
+                out.writeObject(myMaze);
+                out.writeObject(myCurrentX);
+                out.writeObject(myCurrentY);
+                out.writeObject(myGameDifficulty);
+
+                out.close();
+                file.close();
+            } catch (FileNotFoundException ex) {
+                throw new RuntimeException(ex);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
 //        this.setSize(640, 480);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setLocationRelativeTo(null);

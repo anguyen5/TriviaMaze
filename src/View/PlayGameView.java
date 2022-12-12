@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.GridBagLayout;
+import java.io.FileNotFoundException;
 
 
 public class PlayGameView {
@@ -66,7 +67,11 @@ public class PlayGameView {
                     @Override
                     public void run() {
 
-                        GameView lvEasy = new GameView(1);
+                        try {
+                            GameView lvEasy = new GameView(1);
+                        } catch (FileNotFoundException ex) {
+                            throw new RuntimeException(ex);
+                        }
 
                     }
                 });
@@ -82,7 +87,11 @@ public class PlayGameView {
                     @Override
                     public void run() {
 
-                        GameView lvMedium = new GameView(2);
+                        try {
+                            GameView lvMedium = new GameView(2);
+                        } catch (FileNotFoundException ex) {
+                            throw new RuntimeException(ex);
+                        }
 
                     }
                 });
@@ -97,7 +106,11 @@ public class PlayGameView {
                     @Override
                     public void run() {
 
-                        GameView lvHard = new GameView(3);
+                        try {
+                            GameView lvHard = new GameView(3);
+                        } catch (FileNotFoundException ex) {
+                            throw new RuntimeException(ex);
+                        }
 
                     }
                 });

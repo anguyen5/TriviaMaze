@@ -12,7 +12,7 @@ public class Sound {
     private long myMusicPauseTime = 0;
 
     public Sound() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-
+        playMusic();
     }
 
     void playMusic() throws IOException, LineUnavailableException {
