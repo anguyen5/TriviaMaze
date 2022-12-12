@@ -24,8 +24,9 @@ public class MainView {
     }
 
     private void prepareGUI(){
-        mainFrame = new JFrame("Main View");
-        mainFrame.setSize(500,400);
+        mainFrame = new JFrame("TriviaMaze View");
+        mainFrame.setBounds(10, 10, 600, 550);
+        //mainFrame.setSize(500,400);
         mainFrame.setLayout(null);
 
         panelRoom = new Panel(new GridBagLayout());
@@ -35,7 +36,6 @@ public class MainView {
 
         panelRoom.setBounds(40,80, 400,130);
         panelRoom.setBackground(Color.PINK);
-
 
         mainFrame.add(panelRoom);
 

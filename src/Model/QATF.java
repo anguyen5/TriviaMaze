@@ -2,15 +2,14 @@ package Model;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Random;
 
-public class QATF extends QA{
+public class QATF extends QA {
     Connection myConn;
     private String myQuesTF;
     private String myCorrAnsTF;
-    ArrayList<String> myArrChoiceTF;
-    String myCategory;
-    int myId;
+    private ArrayList<String> myArrChoiceTF;
+    private String myCategory;
+    private int myId;
 
     public QATF(String theCate, int theId) {
         myCategory = theCate;
@@ -47,7 +46,7 @@ public class QATF extends QA{
         String sql = "SELECT IDQuest, Category, Question "
                 + "FROM tableTF WHERE IDQuest = ? AND Category = ?";
         String question = "";
-        System.out.println(theCategory + " - " + theId);
+
         try {
             Connection conn = this.connect();
             PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -61,7 +60,8 @@ public class QATF extends QA{
                 question = rs.getString("Question");
             }
             myQuesTF = question;
-            System.out.println("from QATF: " + question + "- " + theId);
+
+            //System.out.println("from QATF: " + question + "- " + theId);
             return question;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -87,8 +87,9 @@ public class QATF extends QA{
 
             }
             myCorrAnsTF = corrAns;
-            System.out.println("from QATF: " + corrAns);
+            //System.out.println("from QATF: " + corrAns);
             return corrAns;
+
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -118,7 +119,8 @@ public class QATF extends QA{
 
             }
             myArrChoiceTF.addAll(choices);
-            System.out.println("from QATF: choices created");
+            //System.out.println("from QATF: choices created");
+
             return choices;
         } catch (SQLException e) {
             System.out.println(e.getMessage());

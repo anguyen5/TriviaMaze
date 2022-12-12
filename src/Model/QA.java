@@ -1,44 +1,44 @@
 package Model;
 
-import java.io.*;
-import java.lang.reflect.Array;
-import java.sql.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Scanner;
 
-import java.util.*;
+/**
+ * This class is the parent for all question types used in this program
+ * it fetches data from the database and creates instances of of those questions objects
+ */
+public class QA extends Inventory {
 
-public class QA extends Inventory{
+    private File myFileCSV_QMC;
+    private File myFileCSV_QAS;
+    private File myFileCSV_QTF;
+    private File myFileCSV_QTFE;
+    private Scanner myScanMC;
+    private Scanner myScanQS;
+    private Scanner myScanTF;
+    private Scanner myScanTFE;
+    private String myCategory;
+    private ArrayList<Integer> myIdList;
+    private String myCate;
+    private int myId;
 
-    File myFileCSV_QMC;
-    File myFileCSV_QAS;
-    File myFileCSV_QTF;
-    Scanner myScanMC;
-    Scanner myScanQS;
-    Scanner myScanTF;
-    String myCategory;
-    ArrayList<Integer> myIdList;
-    String myCate;
-    int myId;
-
-    Connection myConn;
-    private String myQuesMC;
-    private String myCorrAnsMC;
-    ArrayList<String> myArrChoiceMC;
-    ArrayList<String> myArrRedChoiceMC;
-
-    private String myQuesTF;
-    private String myCorrAnsTF;
-    ArrayList<String> myArrChoiceTF;
-
-    private String myQuesSA;
-    private String myCorrAnsSA;
-    private String myHint;
+    private Connection myConn;
 
     public QA(){
         myFileCSV_QMC = new File("Database/QAMultiple.csv");
         myFileCSV_QAS = new File("Database/QAShort.csv");
         myFileCSV_QTF = new File("Database/QATrueFalse.csv");
+        myFileCSV_QTFE = new File("Database/QATrueFalseExtra.csv");
         myCategory = "";
-
+        myConn = null;
+        //connect();
     }
 
     public QA(String theCate, int theId){
@@ -47,9 +47,8 @@ public class QA extends Inventory{
         myFileCSV_QMC = new File("Database/QAMultiple.csv");
         myFileCSV_QAS = new File("Database/QAShort.csv");
         myFileCSV_QTF = new File("Database/QATrueFalse.csv");
+        myFileCSV_QTFE = new File("Database/QATrueFalseExtra.csv");
         myCategory = "";
-
-
 
     }
 
@@ -59,9 +58,12 @@ public class QA extends Inventory{
 
         try {
             myConn = DriverManager.getConnection(url);
+            //myConn = ds.getConnection();
+            System.out.println("myConn: " + myConn);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+        System.out.println( "Connected database successfully" );
         return myConn;
     }
 
@@ -75,7 +77,7 @@ public class QA extends Inventory{
             myScanMC.useDelimiter(",\n");   //sets the delimiter pattern
 
             String line =  "";
-            PreparedStatement statement = conn.prepareStatement(sql);
+            PreparedStatement statement = connect().prepareStatement(sql);
             String iDQuest = "";
             String category= "";
             String question = "";
@@ -131,7 +133,7 @@ public class QA extends Inventory{
             myScanTF.useDelimiter(",\n");   //sets the delimiter pattern
 
             String line =  "";
-            PreparedStatement statement = conn.prepareStatement(sql);
+            PreparedStatement statement = connect().prepareStatement(sql);
 
             String iDQuest = "";
             String category= "";
@@ -181,7 +183,7 @@ public class QA extends Inventory{
             myScanQS.useDelimiter(",\n");   //sets the delimiter pattern
 
             String line =  "";
-            PreparedStatement statement = conn.prepareStatement(sql);
+            PreparedStatement statement = connect().prepareStatement(sql);
 
             String iDQuest = "";
             String category= "";
@@ -209,6 +211,56 @@ public class QA extends Inventory{
                 statement.executeUpdate();
             }
             System.out.println("Inserted tableSA");
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }  catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void insertTableTFExtra() {
+        String sql = "INSERT INTO tableTFExtra(IDQuest,Category,Question,ChoiceA,ChoiceB,CorrectAnswer) " +
+                "VALUES(?, ?,?, ?, ?, ?)";
+
+        try{
+            myScanTFE = new Scanner(myFileCSV_QTFE);
+            myScanTFE.useDelimiter(",\n");   //sets the delimiter pattern
+
+            String line =  "";
+
+            PreparedStatement statement = connect().prepareStatement(sql);
+
+            String iDQuest = "";
+            String category= "";
+            String question = "";
+            String choiceA = "";
+            String choiceB = "";
+            String correctAnswer = "";
+
+            myScanTFE.nextLine();
+            while (myScanTFE.hasNext())  //returns a boolean value
+            {
+                line = myScanTFE.nextLine();
+                String[] data = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
+
+                iDQuest = data[0];
+                category = data[1];
+                question = data[2];
+                choiceA = data[3];
+                choiceB = data[4];
+                correctAnswer = data[5];
+                statement.setString(1,iDQuest);
+                statement.setString(2,category);
+                statement.setString(3,question);
+                statement.setString(4,choiceA);
+                statement.setString(5,choiceB);
+                statement.setString(6,correctAnswer);
+                statement.executeUpdate();
+            }
+            System.out.println("Inserted tableTFE");
         }
         catch (SQLException e) {
             e.printStackTrace();

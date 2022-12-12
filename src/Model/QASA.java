@@ -1,16 +1,15 @@
 package Model;
 
 import java.sql.*;
-import java.util.ArrayList;
 
-public class QASA extends QA{
+public class QASA extends QA  {
     Connection myConn;
     private String myQuesSA;
     private String myCorrAnsSA;
     private String myHint;
 
-    String myCategory;
-    int myId;
+    private String myCategory;
+    private int myId;
 
     public QASA(String theCate, int theId) {
         myCategory = theCate;
@@ -46,7 +45,7 @@ public class QASA extends QA{
         String sql = "SELECT IDQuest, Category, Question "
                 + "FROM tableSA WHERE IDQuest = ? AND Category = ?";
         String question = "";
-        System.out.println(theCategory + " - " + theId);
+
         try {
             Connection conn = this.connect();
             PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -59,8 +58,9 @@ public class QASA extends QA{
             while (rs.next()) {
                 question = rs.getString("Question");
             }
+
             myQuesSA = question;
-            System.out.println("from SA: question " + question);
+            //System.out.println("from SA: question " + question);
             return question;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -85,9 +85,11 @@ public class QASA extends QA{
                 corrAns = rs.getString("CorrectAnswer");
 
             }
+
             myCorrAnsSA = corrAns;
-            System.out.println("from SA: ans " + corrAns);
+            //System.out.println("from SA: ans " + corrAns);
             return corrAns;
+
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

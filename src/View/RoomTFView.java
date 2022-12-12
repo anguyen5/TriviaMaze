@@ -1,6 +1,7 @@
 package View;
 import Model.QA;
 import Model.QATF;
+import Model.QATFExtra;
 
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -10,22 +11,20 @@ import static java.awt.Color.BLUE;
 import static java.awt.Color.RED;
 
 public class RoomTFView extends JFrame {
-    private JFrame mainFrame;
-    private JTextArea taQuestion;
-    private JRadioButton radioBtA;
-    private JRadioButton radioBtB;
-    private ButtonGroup groupRadio;
-    private JButton btnExtension;
-    private JButton btnSubmit;
+    private JFrame myMainFrame;
+    private JTextArea myTaQuestion;
+    private JRadioButton myRadioBtA;
+    private JRadioButton myRadioBtB;
+    private ButtonGroup myGroupRadio;
+    private JButton myBtnSwitch;
+    private JButton myBtnSubmit;
 
-
+    public boolean myCheckAns;
     private String myCate;
     private int myId;
-    private boolean flag;
+
     private String myCorrAns;
-    private ArrayList<String> arrChoice;
-    private ArrayList<String> arrRedChoice;
-    private ArrayList<String> arrOpt50;
+    private ArrayList<String> myArrChoice;
     private QA myBank;
 
     // Constructor to setup GUI components and event handlers
@@ -34,90 +33,102 @@ public class RoomTFView extends JFrame {
         myId = theId;
         myBank = new QATF(theCate, theId);
         prepareGUI(theCate, theId);
+        myCheckAns = false;
     }
     public RoomTFView(){
 
     }
 
     private void prepareGUI(String theCate, int theId){
-        mainFrame = new JFrame("Welcome to challenge^^");
-        mainFrame.setSize(500,400);
-        mainFrame.setLayout(null);
+        myMainFrame = new JFrame("Welcome to challenge^^");
+        myMainFrame.setSize(500,400);
+        myMainFrame.setLayout(null);
 
-        taQuestion = new JTextArea();
-        taQuestion.setBounds(17,33,450,90);
-        taQuestion.setText(displayQuestion(theCate, theId));
-        btnExtension = new JButton("Extension");
-        btnExtension.setBackground(BLUE);
-        btnExtension.setBounds(17, 8, 80,20);
-        btnSubmit = new JButton("Submit");
-        btnSubmit.setBounds(230, 330, 80, 30);
-        btnSubmit.setBackground(RED);
+        myTaQuestion = new JTextArea();
+        myTaQuestion.setBounds(17,33,450,90);
+        myTaQuestion.setText(displayQuestion(theCate, theId));
+        myTaQuestion.setLineWrap(true);
+        myTaQuestion.setWrapStyleWord(true);
 
-        radioBtA = new JRadioButton();
-        radioBtB = new JRadioButton();
-        groupRadio = new ButtonGroup();
-        arrChoice = displayChoices(theCate, theId);
-        radioBtA.setText(arrChoice.get(0));
-        radioBtB.setText(arrChoice.get(1));
-        radioBtA.setBounds(12, 120, 100, 80);
-        radioBtB.setBounds(12, 170, 100, 80);
+        myBtnSwitch = new JButton("Switch Question");
+        myBtnSwitch.setBackground(BLUE);
+        myBtnSwitch.setBounds(17, 8, 120,20);
+        myBtnSubmit = new JButton("Submit");
+        myBtnSubmit.setBounds(230, 330, 80, 30);
+        myBtnSubmit.setBackground(RED);
 
-        mainFrame.add(taQuestion);
-        mainFrame.add(radioBtA);
-        mainFrame.add(radioBtB);
-        mainFrame.add(btnExtension);
-        mainFrame.add(btnSubmit);
+        myRadioBtA = new JRadioButton();
+        myRadioBtB = new JRadioButton();
+        myGroupRadio = new ButtonGroup();
+        myArrChoice = displayChoices(theCate, theId);
+        myRadioBtA.setText(myArrChoice.get(0));
+        myRadioBtB.setText(myArrChoice.get(1));
+        myRadioBtA.setBounds(12, 120, 100, 80);
+        myRadioBtB.setBounds(12, 170, 100, 80);
 
-        groupRadio.add(radioBtA);
-        groupRadio.add(radioBtB);
+        myMainFrame.add(myTaQuestion);
+        myMainFrame.add(myRadioBtA);
+        myMainFrame.add(myRadioBtB);
+        myMainFrame.add(myBtnSwitch);
+        myMainFrame.add(myBtnSubmit);
+
+        myGroupRadio.add(myRadioBtA);
+        myGroupRadio.add(myRadioBtB);
 
 
-        mainFrame.addWindowListener(new WindowAdapter() {
+        myMainFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent windowEvent){
-                System.exit(0);
+                myMainFrame.dispose();
+                //System.exit(0);
             }
         });
 
-        mainFrame.setVisible(true);
         showEventDemo();
     }
+
+    public void roomShow(){
+        myMainFrame.setVisible(true);
+    }
+
     public void showEventDemo(){
 
-        btnExtension.addActionListener(new ActionListener() {
+        myBtnSwitch.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(btnExtension,"Give 60 seconds!");
+                JOptionPane.showMessageDialog(myBtnSwitch,"Your question is going to switch!");
+
             }
         });
 
-        btnSubmit.addActionListener(new ActionListener() {
+        myBtnSubmit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String corrAns = displayAnswer(myCate, myId);
                 String userAns = "";
 
                 for (int i = 0; i < 4; i++) {
-                    if (radioBtA.isSelected()) {
+                    if (myRadioBtA.isSelected()) {
                         userAns = "TRUE";
                         break;
-                    } else if (radioBtB.isSelected()) {
+                    } else if (myRadioBtB.isSelected()) {
                         userAns = "FALSE";
                         break;
                     }
                 }
 
                 if(userAns.equals("")) {
-                    JOptionPane.showMessageDialog(btnSubmit, "Please, select your answer!");
+                    JOptionPane.showMessageDialog(myBtnSubmit, "Please, select your answer!");
                 }
                 else if(userAns.equals(corrAns)){
-                    JOptionPane.showMessageDialog(btnSubmit, "It's correct. You're pass!");
+                    JOptionPane.showMessageDialog(myBtnSubmit, "It's correct. You're pass!");
                     RoomMCView.index++;
+                    myCheckAns = true;
                 }
                 else {
-                    JOptionPane.showMessageDialog(btnSubmit, "It's not correct. Please, try other door!");
+                    JOptionPane.showMessageDialog(myBtnSubmit, "It's not correct. Please, try other door!");
+                    myCheckAns = false;
                 }
-                System.out.println("index: " + RoomMCView.index);
+                myMainFrame.dispose();
                 //System.exit(0);
 
             }
@@ -126,22 +137,45 @@ public class RoomTFView extends JFrame {
 
     public String displayQuestion(String theCate, int theId) {
         String ques = myBank.getQuestion(theCate, theId);
-        System.out.println(ques);
+        //System.out.println(ques);
         return ques;
     }
 
     public ArrayList<String> displayChoices(String theCate, int theId) {
-        arrChoice = new ArrayList<String>();
+        myArrChoice = new ArrayList<String>();
         ArrayList<String> temp = new ArrayList<String>();
         temp = myBank.getChoices(theCate, theId);
-        arrChoice.addAll(temp);
-        return arrChoice;
+        myArrChoice.addAll(temp);
+        return myArrChoice;
     }
 
     public String displayAnswer(String theCate, int theId) {
         String ans = myBank.getAnswer(theCate, theId);
         myCorrAns = ans;
-        System.out.println(ans);
+        //System.out.println(ans);
+        return ans;
+    }
+
+    public String displayQuestionExtra(String theCate, int theId){
+        myBank = new QATFExtra(theCate, theId);
+        String quesE = myBank.getQuestion(theCate, theId);
+        return quesE;
+
+    }
+    public ArrayList<String> displayChoicesExtra (String theCate, int theId) {
+        myBank = new QATFExtra(theCate, theId);
+        myArrChoice = new ArrayList<String>();
+        ArrayList<String> temp = new ArrayList<String>();
+        temp = myBank.getChoices(theCate, theId);
+        myArrChoice.addAll(temp);
+        return myArrChoice;
+    }
+
+    public String displayAnswerExtra (String theCate, int theId) {
+        myBank = new QATFExtra(theCate, theId);
+        String ans = myBank.getAnswer(theCate, theId);
+        myCorrAns = ans;
+        //System.out.println(ans);
         return ans;
     }
 

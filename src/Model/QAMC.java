@@ -6,12 +6,12 @@ import java.util.Random;
 
 public class QAMC extends QA {
     Connection myConn;
-    String myQuesMC;
-    String myCorrAnsMC;
-    ArrayList<String> myArrChoiceMC;
-    ArrayList<String> myArrRedChoiceMC;
-    String myCategory;
-    int myId;
+    private String myQuesMC;
+    private String myCorrAnsMC;
+    private ArrayList<String> myArrChoiceMC;
+    private ArrayList<String> myArrRedChoiceMC;
+    private String myCategory;
+    private int myId;
 
     public QAMC(String theCate, int theId) {
         myQuesMC = "";
@@ -54,7 +54,7 @@ public class QAMC extends QA {
     public String getQuestion(String theCate, int theId) {
         myCategory = theCate;
         myId = theId;
-        System.out.println(theCate + " - " + theId);
+        //System.out.println(theCate + " - " + theId);
         String sql = "SELECT IDQuest,Category,Question "
                 + "FROM tableMC WHERE IDQuest = ? AND Category = ?";
         String question = "";
@@ -71,12 +71,13 @@ public class QAMC extends QA {
 
             }
             myQuesMC = question;
-            System.out.println("from QAMC: "+ question);
+            //System.out.println("from QAMC: "+ question);
             return question;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        System.out.println("from QAMC: not "+ question);
+
+        //System.out.println("from QAMC: not "+ question);
         return question;
     }
 
@@ -98,7 +99,7 @@ public class QAMC extends QA {
 
             }
             myCorrAnsMC = corrAns;
-            System.out.println("from QAMC: " + corrAns);
+            //System.out.println("from QAMC: " + corrAns);
             return corrAns;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -133,7 +134,7 @@ public class QAMC extends QA {
 
             }
             myArrChoiceMC.addAll(choices);
-            System.out.println("from QAMC: choices created");
+            //System.out.println("from QAMC: choices created");
             return choices;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -163,7 +164,7 @@ public class QAMC extends QA {
                 break;
             }
         }
-        System.out.println("corr Ans: " + corrAns);
+        //System.out.println("corr Ans: " + corrAns);
         //Random reduce choices
         int temp1, temp2;
         Random rand = new Random();
@@ -173,7 +174,7 @@ public class QAMC extends QA {
         }while (temp1 == temp2 || (temp1 == corrAns || temp2 == corrAns));
         myArrRedChoiceMC.add(myArrChoiceMC.get(temp1));
         myArrRedChoiceMC.add(myArrChoiceMC.get(temp2));
-        printChoicesMC();
+        //printChoicesMC();
         return myArrRedChoiceMC;
     }
 
@@ -191,7 +192,7 @@ public class QAMC extends QA {
                 temp2 = i;
             }
         }
-        printRedChoiceMC();
+        //printRedChoiceMC();
         arrOpt.add(temp1);
         arrOpt.add(temp2);
         return arrOpt;
