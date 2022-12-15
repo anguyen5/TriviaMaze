@@ -5,7 +5,7 @@ import java.awt.*;
 import java.io.*;
 
 /**
- * @author: Satinder singh
+ * @author: Satinder Singh
  * @version 12/11/2022
  *
  */

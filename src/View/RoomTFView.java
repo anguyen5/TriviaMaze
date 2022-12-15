@@ -14,7 +14,7 @@ import static java.awt.Color.BLUE;
 import static java.awt.Color.RED;
 
 /**
- * @author: An Nguyen, Sunny
+ * @author: An Nguyen, Xuan Doa (Sunny)
  * @version: 11/10/2022, updated 12/13/2022
  *
  */

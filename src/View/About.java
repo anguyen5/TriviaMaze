@@ -8,7 +8,7 @@ import java.util.Scanner;
 import javax.swing.*;
 
 /**
- * @author: Satinder singh
+ * @author: Satinder Singh
  * @version 12/2/2022
  *
  */

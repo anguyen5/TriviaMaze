@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 /**
- * @author satindersingh
+ * @author: Satinder Singh
  * @version 12/2/2022
  *
  */

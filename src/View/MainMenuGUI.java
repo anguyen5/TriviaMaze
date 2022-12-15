@@ -13,7 +13,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * @author: Satinder singh
+ * @author: Satinder Singh
  * @version 12/4/2022
  *
  */

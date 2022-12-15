@@ -10,7 +10,7 @@ import java.awt.event.KeyEvent;
 import java.io.*;
 
 /**
- * @author: An Nguyen, Satinder
+ * @author: An Nguyen, Satinder Singh
  * @version: 11/20/2022, updated 12/14/2022
  *
  */
