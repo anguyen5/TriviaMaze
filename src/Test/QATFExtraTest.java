@@ -1,10 +1,8 @@
-package Test;
-
+package Testing;
 import Model.QATFExtra;
 import org.junit.Before;
 import org.junit.Test;
 
-import Model.*;
 import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 
