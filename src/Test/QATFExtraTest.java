@@ -1,4 +1,6 @@
 package Test;
+
+import Model.QATFExtra;
 import org.junit.Before;
 import org.junit.Test;
 
