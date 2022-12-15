@@ -26,7 +26,6 @@ public class QATFTest {
         expected  = new ArrayList<String>();
     }
 
-
     @Test
     /**
      * Test for getQuestion("TF", 1)
@@ -65,6 +64,7 @@ public class QATFTest {
         question = bankTF.getQuestion("", 1);
         assertEquals(expected,question);
     }
+
     @Test
     /**
      * Test for getQuestion("MC", 20): tests for ID out of range

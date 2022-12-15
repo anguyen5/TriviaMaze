@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * This class is created to generate the maze
  * @version 12.14.22 (latest update)
- * @author An Nguyee=n , Satinder Singh
+ * @author An Nguyen , Satinder Singh
  */
 public class Maze implements Serializable {
     private static final int RECT_SIZE = 60;
