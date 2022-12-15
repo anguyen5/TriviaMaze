@@ -1,358 +1,365 @@
-package Model;
+package Testing;
+
+import static org.junit.Assert.*;
+
+import Model.QAMC;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import static org.junit.Assert.assertEquals;
 
 /**
- * @author: Xuan Dao (Sunny)
- * @version: 12/12/2022
+ * @author: An Nguyen
+ * @version: 12/10/2022
  *
  */
 
 /**
- * This class test for QATFExtra class
+ * This class test for QAMC class
  */
-public class QATFExtraTest {
 
-    private QATFExtra bankTFE;
+public class QAMCTest {
+
+    private QAMC bankMC;
     @Before
     public final void setup(){
-        bankTFE = new QATFExtra();
+        bankMC = new QAMC();
     }
 
-    @Test
     /**
-     * Test for getQuestion("TFE", 1): tests for different category
+     * Test for getQuestion("MC", 1)
      */
+    @Test
     public final void getQuestion_0() {
-        bankTFE = new QATFExtra("TFE", 1);
-        String expected = "Classes in the same package are implicitly imported into the main " ;
+        bankMC = new QAMC("MC", 1);
+        String expected = "int x= 1; int y = 2; int z= x+y; what print out of z?";
 
         String question = "";
-        question = bankTFE.getQuestion("TFE", 1);
+        question = bankMC.getQuestion("MC", 1);
         assertEquals(expected,question);
     }
 
-    @Test
     /**
-     * Test for getQuestion("SA", 2): test for different category
+     * Test for getQuestion("MC", 2)
      */
+    @Test
     public final void getQuestion_1() {
-        bankTFE = new QATFExtra("SA", 2);
-        String expected = "";
+        bankMC = new QAMC("MC", 2);
+        String expected = "what statement does print out ?";
 
         String question = "";
-        question = bankTFE.getQuestion("SA", 2);
+        question = bankMC.getQuestion("MC", 2);
         assertEquals(expected,question);
     }
 
-    @Test
     /**
-     * Test for getQuestion("", 1): tests for empty category
+     * Test for getQuestion("TF", 1): tests for different category
      */
+    @Test
     public final void getQuestion_2() {
-        bankTFE = new QATFExtra("", 1);
+        bankMC = new QAMC("TF", 2);
         String expected = "";
 
         String question = "";
-        question = bankTFE.getQuestion("", 1);
+        question = bankMC.getQuestion("TF", 2);
         assertEquals(expected,question);
     }
-    @Test
+
     /**
      * Test for getQuestion("MC", 20): tests for ID out of range
      */
+    @Test
     public final void getQuestion_3() {
-        bankTFE = new QATFExtra("TFE", 20);
+        bankMC = new QAMC("MC", 20);
         String expected = "";
 
         String question = "";
-        question = bankTFE.getQuestion("TFE", 20);
-        assertEquals("",question);
-    }
-
-    @Test
-    /**
-     * Test for getQuestion("", 4)
-     */
-    public final void getQuestion_4() {
-        bankTFE = new QATFExtra("TFE", 4);
-        String expected = "Parentheses () would not be used to clarify a dangling-else.";
-
-        String question = "";
-        question = bankTFE.getQuestion("TFE", 4);
+        question = bankMC.getQuestion("MC", 20);
         assertEquals(expected,question);
     }
 
+    /**
+     * Test for getQuestion("", 2): tests for empty category
+     */
     @Test
+    public final void getQuestion_4() {
+        bankMC = new QAMC("", 2);
+        String expected = "";
+
+        String question = "";
+        question = bankMC.getQuestion("", 2);
+        assertEquals(expected,question);
+    }
+
     /**
      * Test for getQuestion("", -2): tests for ID is negative
      */
-    public final void getQuestion_5() {
-        bankTFE = new QATFExtra("", -2);
-        String expected = "";
-
-        String question = "";
-        question = bankTFE.getQuestion("", -2);
-        assertEquals("",question);
-    }
-
     @Test
-    /**
-     * Test for getQuestion("TFE", 0): tests for ID is 0
-     */
-    public final void getQuestion_6() {
-        bankTFE = new QATFExtra("TFE", 0);
+    public final void getQuestion_5() {
+        bankMC = new QAMC("MC", -2);
         String expected = "";
 
         String question = "";
-        question = bankTFE.getQuestion("TFE", 0);
+        question = bankMC.getQuestion("MC", -2);
         assertEquals(expected,question);
     }
 
     /**
-     * Test for getQuestion("", 20): tests for ID is out of bound,
+     * Test for getQuestion("MC", 2): tests for ID is 0
+     */
+    @Test
+    public final void getQuestion_6() {
+        bankMC = new QAMC("MC", 0);
+        String expected = "";
+
+        String question = "";
+        question = bankMC.getQuestion("MC", 0);
+        assertEquals(expected,question);
+    }
+
+    /**
+     * Test for getQuestion("MC", 2): tests for ID is out of bound,
      * and empty category
      */
     @Test
     public final void getQuestion_7() {
-        bankTFE = new QATFExtra("", 20);
+        bankMC = new QAMC("", 20);
         String expected = "";
 
         String question = "";
-        question = bankTFE.getQuestion("", 20);
+        question = bankMC.getQuestion("", 20);
         assertEquals(expected,question);
     }
 
     /**
-     * Test for getQuestion("SA", 2): tests for ID is out of bound,
+     * Test for getQuestion("MC", 2): tests for ID is out of bound,
      * and different category
      */
     @Test
     public final void getQuestion_8() {
-        bankTFE = new QATFExtra("SA", 20);
+        bankMC = new QAMC("SA", 20);
         String expected = "";
 
         String question = "";
-        question = bankTFE.getQuestion("SA", 20);
+        question = bankMC.getQuestion("SA", 20);
         assertEquals(expected,question);
     }
 
-    @Test
     /**
-     * Test for getAnswer("TFE", 1)
+     * Test for getAnswer("MC", 1)
      */
+    @Test
     public final void getAnswer_0() {
-        bankTFE = new QATFExtra("TFE", 1);
-        String expected = "FALSE ";
+        bankMC = new QAMC("MC", 1);
+        String expected = "B";
 
         String ans = "";
-        ans = bankTFE.getAnswer("TFE", 1);
+        ans = bankMC.getAnswer("MC", 1);
         assertEquals(expected,ans);
     }
 
-    @Test
     /**
-     * Test for getAnswer("TFE", 2)
+     * Test for getAnswer("MC", 2)
      */
+    @Test
     public final void getAnswer_1() {
-        bankTFE = new QATFExtra("TFE", 2);
-        String expected = "FALSE ";
+        bankMC = new QAMC("MC", 2);
+        String expected = "C";
 
         String ans = "";
-        ans = bankTFE.getAnswer("TFE", 2);
+        ans = bankMC.getAnswer("MC", 2);
         assertEquals(expected,ans);
     }
 
-    @Test
     /**
-     * Test for getAnswer("SA", 2): tests for different category
+     * Test for getAnswer("TF", 2): tests for different category
      */
+    @Test
     public final void getAnswer_2() {
-        bankTFE = new QATFExtra("SA", 2);
+        bankMC = new QAMC("TF", 2);
         String expected = "";
 
         String ans = "";
-        ans = bankTFE.getAnswer("SA", 2);
+        ans = bankMC.getAnswer("TF", 2);
         assertEquals(expected,ans);
     }
 
-    @Test
     /**
-     * Test for getAnswer("TFE", 20): tests for ID is out of range
+     * Test for getAnswer("MC", 20): tests for ID is out of range
      */
+    @Test
     public final void getAnswer_3() {
-        bankTFE = new QATFExtra("TFE", 20);
+        bankMC = new QAMC("MC", 20);
         String expected = "";
 
         String ans = "";
-        ans = bankTFE.getAnswer("TFE", 20);
+        ans = bankMC.getAnswer("MC", 20);
         assertEquals(expected,ans);
     }
 
-    @Test
     /**
      * Test for getAnswer("", 2): tests for empty category
      */
-    public final void getAnswer_4() {
-        bankTFE = new QATFExtra("", -2);
-        String expected = "";
-
-        String ans = "";
-        ans = bankTFE.getAnswer("", -2);
-        assertEquals(expected,ans);
-    }
-
     @Test
-    /**
-     * Test for getAnswer("TFE", -2): tests for ID is negative
-     */
-    public final void getAnswer_5() {
-        bankTFE = new QATFExtra("TFE", -2);
+    public final void getAnswer_4() {
+        bankMC = new QAMC("", 2);
         String expected = "";
 
         String ans = "";
-        ans = bankTFE.getAnswer("TFE", -2);
+        ans = bankMC.getAnswer("", 2);
         assertEquals(expected,ans);
     }
 
     /**
-     * Test for getAnswer("TFE", 0): tests for ID is 0
+     * Test for getAnswer("MC", -2): tests for ID is negative
+     */
+    @Test
+    public final void getAnswer_5() {
+        bankMC = new QAMC("MC", -2);
+        String expected = "";
+
+        String ans = "";
+        ans = bankMC.getAnswer("MC", -2);
+        assertEquals(expected,ans);
+    }
+
+    /**
+     * Test for getAnswer("", 2): tests for ID is 0
      */
     @Test
     public final void getAnswer_6() {
-        bankTFE = new QATFExtra("TFE", 0);
+        bankMC = new QAMC("MC", 0);
         String expected = "";
 
         String ans = "";
-        ans = bankTFE.getAnswer("TFE", 0);
+        ans = bankMC.getAnswer("MC", 0);
         assertEquals(expected,ans);
     }
 
     /**
-     * Test for getAnswer("", 20): tests for empty category,
+     * Test for getAnswer("", 2): tests for empty category,
      * and ID is out of bound
      */
     @Test
     public final void getAnswer_7() {
-        bankTFE = new QATFExtra("", 20);
+        bankMC = new QAMC("", 20);
         String expected = "";
 
         String ans = "";
-        ans = bankTFE.getAnswer("", 20);
+        ans = bankMC.getAnswer("", 20);
         assertEquals(expected,ans);
     }
 
     /**
-     * Test for getAnswer("SA", 20): tests for different category,
+     * Test for getAnswer("", 2): tests for different category,
      * and ID is out of bound
      */
     @Test
     public final void getAnswer_8() {
-        bankTFE = new QATFExtra("SA", 20);
+        bankMC = new QAMC("SA", 20);
         String expected = "";
 
         String ans = "";
-        ans = bankTFE.getAnswer("SA", 20);
+        ans = bankMC.getAnswer("SA", 20);
         assertEquals(expected,ans);
     }
 
-
-
-
-    @Test
     /**
-     * Test for getChoices("TFE", 1)
+     * Test for getChoices("MC", 1)
      */
+    @Test
     public final void getChoices_0() {
-        bankTFE = new QATFExtra("TFE", 1);
+        bankMC = new QAMC("MC", 1);
         ArrayList<String> expected = new ArrayList<String>();
-        expected.add("TRUE");
-        expected.add("FALSE");
+        expected.add("2");
+        expected.add("3");
+        expected.add("4");
+        expected.add("5");
+
         ArrayList<String> ans;
-        ans = bankTFE.getChoices("TFE", 1);
+        ans = bankMC.getChoices("MC", 1);
         assertEquals(expected,ans);
     }
 
-    @Test
     /**
-     * Test for getChoices("TFE", 2)
+     * Test for getChoices("MC", 2)
      */
+    @Test
     public final void getChoices_1() {
-        bankTFE = new QATFExtra("TFE", 2);
+        bankMC = new QAMC("MC", 2);
         ArrayList<String> expected = new ArrayList<String>();
-        expected.add("TRUE");
-        expected.add("FALSE");
+        expected.add("Sytem.in");
+        expected.add("print out");
+        expected.add("System.out.println() ");
+        expected.add("consle.out");
 
         ArrayList<String> ans;
-        ans = bankTFE.getChoices("TFE", 2);
+        ans = bankMC.getChoices("MC", 2);
         assertEquals(expected,ans);
     }
 
-    @Test
     /**
-     * Test for getChoices("SA", 2)
+     * Test for getChoices("MC", 2)
      */
+    @Test
     public final void getChoices_2() {
-        bankTFE = new QATFExtra("SA", 2);
+        bankMC = new QAMC("TF", 2);
         ArrayList<String> expected = new ArrayList<String>();
 
         ArrayList<String> ans;
-        ans = bankTFE.getChoices("SA", 2);
+        ans = bankMC.getChoices("TF", 2);
         assertEquals(expected,ans);
     }
 
-    @Test
     /**
-     * Test for getChoices("TFE", 20): test for ID out of bound
+     * Test for getChoices("MC", 20): test for ID out of bound
      */
+    @Test
     public final void getChoices_3() {
-        bankTFE = new QATFExtra("TFE", 20);
+        bankMC = new QAMC("MC", 20);
         ArrayList<String> expected = new ArrayList<String>();
 
         ArrayList<String> ans;
-        ans = bankTFE.getChoices("TF", 20);
+        ans = bankMC.getChoices("MC", 20);
         assertEquals(expected,ans);
     }
 
-    @Test
     /**
      * Test for getChoices("", 2): test for empty category
      */
+    @Test
     public final void getChoices_4() {
-        bankTFE = new QATFExtra("", 20);
+        bankMC = new QAMC("", 2);
         ArrayList<String> expected = new ArrayList<String>();
 
         ArrayList<String> ans;
-        ans = bankTFE.getChoices("", 20);
+        ans = bankMC.getChoices("", 2);
         assertEquals(expected,ans);
     }
 
-    @Test
     /**
-     * Test for getChoices("TFE", -2): test for ID is negative
+     * Test for getChoices("MC", -2): test for ID is negative
      */
+    @Test
     public final void getChoices_5() {
-        bankTFE = new QATFExtra("TFE", -2);
+        bankMC = new QAMC("MC", -2);
         ArrayList<String> expected = new ArrayList<String>();
 
         ArrayList<String> ans;
-        ans = bankTFE.getChoices("TFE", -2);
+        ans = bankMC.getChoices("MC", -2);
         assertEquals(expected,ans);
     }
 
-    @Test
     /**
-     * Test for getChoices("TFE", 0): test for ID is 0
+     * Test for getChoices("MC", 0): test for ID is 0
      */
+    @Test
     public final void getChoices_6() {
-        bankTFE = new QATFExtra("TFE", 0);
+        bankMC = new QAMC("MC", 0);
         ArrayList<String> expected = new ArrayList<String>();
 
         ArrayList<String> ans;
-        ans = bankTFE.getChoices("TFE", 0);
+        ans = bankMC.getChoices("MC", 0);
         assertEquals(expected,ans);
     }
 
@@ -362,29 +369,26 @@ public class QATFExtraTest {
      */
     @Test
     public final void getChoices_7() {
-        bankTFE = new QATFExtra("", 20);
+        bankMC = new QAMC("", 20);
         ArrayList<String> expected = new ArrayList<String>();
 
         ArrayList<String> ans;
-        ans = bankTFE.getChoices("", 20);
+        ans = bankMC.getChoices("", 20);
         assertEquals(expected,ans);
     }
 
     /**
-     * Test for getChoices("SA", 20): test for different, and
+     * Test for getChoices("", 20): test for different, and
      * ID is out of bound
      */
     @Test
     public final void getChoices_8() {
-        bankTFE = new QATFExtra("SA", 20);
+        bankMC = new QAMC("SA", 20);
         ArrayList<String> expected = new ArrayList<String>();
 
         ArrayList<String> ans;
-        ans = bankTFE.getChoices("SA", 20);
+        ans = bankMC.getChoices("SA", 20);
         assertEquals(expected,ans);
     }
 
-
 }
-
-
