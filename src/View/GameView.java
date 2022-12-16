@@ -399,7 +399,6 @@ public class GameView extends JFrame implements Serializable {
      * Copy current maze into temporary maze ,
      * and then check all directions North, South, East, West.
      * If player can go, increase position by 1. If not, position will be filled by WALL
-     *
      * @return: boolean
      */
     public boolean searchPath() {
