@@ -38,7 +38,7 @@ public class Maze implements Serializable {
      * @return int the maze
      */
     public static int[][] getMAZE() {
-        return MAZE;
+            return MAZE;
     }
 
 
