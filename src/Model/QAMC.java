@@ -9,7 +9,7 @@ import java.util.Random;
  * QAMC class is used to get questions, correct answers, choices,
  * and create Reduce Choices for helping players to get right answer.
  * This class will extend to the QA class
- * @author: An Nguyen, Satinder Singh
+ * @author: An Nguyen
  * @version: 10.28.22
  *
  */
