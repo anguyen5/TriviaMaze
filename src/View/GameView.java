@@ -127,6 +127,13 @@ public class GameView extends JFrame implements Serializable {
     }
 
     /**
+     * GameView(): default constructor
+     */
+   public GameView(){
+       this.setTitle("Welcome to Trivia Maze");
+   }
+
+    /**
      * GameView(int[][], int, int): Constructor pass three parameters such as
      * maze, position x, and position y
      * @param mySavedMaze: maze
@@ -155,6 +162,15 @@ public class GameView extends JFrame implements Serializable {
 
     }
 
+    public void setMaze(int[][] theMaze){
+
+        for (int row = 0; row < theMaze.length; row++) {
+            for (int col = 0; col < theMaze[0].length; col++) {
+                myMaze[row][col] = theMaze[row][col];
+            }
+        }
+
+    }
 
     /**
      * paint(): to draw maze by using Graphic
