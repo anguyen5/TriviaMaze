@@ -1,7 +1,3 @@
-/**
- * @author satindersingh
- * @version 12/2/2022
- */
 package View;
 
 import javax.sound.sampled.*;
